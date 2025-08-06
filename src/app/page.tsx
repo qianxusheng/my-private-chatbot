@@ -1,53 +1,69 @@
 'use client';
 
 import { useState } from 'react';
-import { FiSend } from 'react-icons/fi';
+import { FiSend, FiTrash2 } from 'react-icons/fi';
+import { useChatStore } from '@/store/chatStore';
 
 export default function Home() {
-  const [messages, setMessages] = useState<Array<{id: string, content: string, role: 'user' | 'assistant'}>>([]);
+  const { messages, isLoading, addMessage, setLoading, clearMessages } = useChatStore();
   const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMessage = {
-      id: Date.now().toString(),
+    addMessage({
       content: input,
-      role: 'user' as const
-    };
+      role: 'user'
+    });
 
-    setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
     setInput('');
-    setIsLoading(true);
+    setLoading(true);
 
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ message: currentInput })
       });
 
       const data = await response.json();
       
-      const assistantMessage = {
-        id: (Date.now() + 1).toString(),
-        content: data.response,
-        role: 'assistant' as const
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
+      if (data.error) {
+        addMessage({
+          content: `错误: ${data.error}`,
+          role: 'assistant'
+        });
+      } else {
+        addMessage({
+          content: data.response,
+          role: 'assistant'
+        });
+      }
     } catch (error) {
       console.error('Error sending message:', error);
+      addMessage({
+        content: '抱歉，发生了错误。请检查网络连接或稍后再试。',
+        role: 'assistant'
+      });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col h-screen bg-gray-900 text-white">
-      <header className="p-4 border-b border-gray-700">
+      <header className="p-4 border-b border-gray-700 flex justify-between items-center">
         <h1 className="text-xl font-semibold">私人聊天机器人</h1>
+        {messages.length > 0 && (
+          <button
+            onClick={clearMessages}
+            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+            title="清空对话"
+          >
+            <FiTrash2 className="w-5 h-5" />
+          </button>
+        )}
       </header>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
