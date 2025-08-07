@@ -32,7 +32,7 @@ export default function Home() {
       
       if (data.error) {
         addMessage({
-          content: `错误: ${data.error}`,
+          content: `Error: ${data.error}`,
           role: 'assistant'
         });
       } else {
@@ -44,7 +44,7 @@ export default function Home() {
     } catch (error) {
       console.error('Error sending message:', error);
       addMessage({
-        content: '抱歉，发生了错误。请检查网络连接或稍后再试。',
+        content: 'Sorry, an error occurred. Please check your network connection or try again later.',
         role: 'assistant'
       });
     } finally {
@@ -55,12 +55,12 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-gray-900 text-white">
       <header className="p-4 border-b border-gray-700 flex justify-between items-center">
-        <h1 className="text-xl font-semibold">私人聊天机器人</h1>
+        <h1 className="text-xl font-semibold">Private Chatbot</h1>
         {messages.length > 0 && (
           <button
             onClick={clearMessages}
             className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-            title="清空对话"
+            title="Clear conversation"
           >
             <FiTrash2 className="w-5 h-5" />
           </button>
@@ -70,7 +70,7 @@ export default function Home() {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 ? (
           <div className="text-center text-gray-400 mt-20">
-            <p>开始对话吧！</p>
+            <p>Start chatting!</p>
           </div>
         ) : (
           messages.map((message) => (
@@ -110,7 +110,7 @@ export default function Home() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            placeholder="输入您的消息..."
+            placeholder="Type your message..."
             className="flex-1 p-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-blue-500"
             disabled={isLoading}
           />

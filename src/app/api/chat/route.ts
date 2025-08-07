@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     if (!message) {
       return NextResponse.json(
-        { error: '消息内容不能为空' },
+        { error: 'Message content cannot be empty' },
         { status: 400 }
       );
     }
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Ollama API error:', error);
     return NextResponse.json(
-      { error: 'AI服务暂时不可用，请稍后再试' },
+      { error: 'AI service is temporarily unavailable, please try again later' },
       { status: 500 }
     );
   }
