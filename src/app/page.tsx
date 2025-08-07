@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { FiSend, FiTrash2 } from 'react-icons/fi';
+import { FiSend, FiTrash2, FiBookOpen, FiEdit3 } from 'react-icons/fi';
+import Link from 'next/link';
 import { useChatStore } from '@/store/chatStore';
 import MessageContent from '@/components/MessageContent';
 
@@ -56,15 +57,24 @@ export default function Home() {
     <div className="flex flex-col h-screen bg-gray-900 text-white">
       <header className="p-4 border-b border-gray-700 flex justify-between items-center">
         <h1 className="text-xl font-semibold">Private Chatbot</h1>
-        {messages.length > 0 && (
-          <button
-            onClick={clearMessages}
+        <div className="flex items-center gap-2">
+          <Link
+            href="/notes"
             className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-            title="Clear conversation"
+            title="View Notes"
           >
-            <FiTrash2 className="w-5 h-5" />
-          </button>
-        )}
+            <FiBookOpen className="w-5 h-5" />
+          </Link>
+          {messages.length > 0 && (
+            <button
+              onClick={clearMessages}
+              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+              title="Clear conversation"
+            >
+              <FiTrash2 className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </header>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
