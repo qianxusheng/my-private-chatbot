@@ -1,6 +1,6 @@
 # My Private GPT Chatbot
 
-A private GPT chatbot application built with Next.js and Ollama.
+A private GPT-powered chatbot application developed using Next.js and Ollama, rapidly built with the assistance of Claude AI for code generation.
 
 ## Features
 
