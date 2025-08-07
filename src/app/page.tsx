@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FiSend, FiTrash2 } from 'react-icons/fi';
 import { useChatStore } from '@/store/chatStore';
+import MessageContent from '@/components/MessageContent';
 
 export default function Home() {
   const { messages, isLoading, addMessage, setLoading, clearMessages } = useChatStore();
@@ -84,7 +85,7 @@ export default function Home() {
                     : 'bg-gray-700 text-gray-100'
                 }`}
               >
-                <p className="whitespace-pre-wrap">{message.content}</p>
+                <MessageContent content={message.content} role={message.role} />
               </div>
             </div>
           ))
