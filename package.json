@@ -10,8 +10,10 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@prisma/client": "^6.13.0",
     "next": "15.4.6",
     "ollama": "^0.5.16",
+    "prisma": "^6.13.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
